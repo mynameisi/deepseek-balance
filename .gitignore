@@ -1,0 +1,9 @@
+data/
+__pycache__/
+*.pyc
+.env
+.config/
+platform_token
+balance_history.json
+*.zip
+*-*.csv
