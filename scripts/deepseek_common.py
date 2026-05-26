@@ -87,12 +87,13 @@ def fetch_balance(api_key: str) -> dict:
         return json.loads(resp.read().decode())
 
 
-def parse_platform_json(raw: bytes) -> dict:
+def parse_platform_json(raw: bytes) -> dict | list:
     payload = json.loads(raw.decode())
     if payload.get("code") != 0:
         raise RuntimeError(payload.get("msg") or str(payload))
     data = payload.get("data") or {}
-    return data.get("biz_data", data)
+    result = data.get("biz_data", data)
+    return result
 
 
 def mask_api_key(key: str) -> str:

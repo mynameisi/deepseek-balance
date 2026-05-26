@@ -99,14 +99,16 @@ def print_summary(token: str, year: int, month: int, out_dir: Path, api_key: str
 
     print()
     print("  模型费用 CNY (cost API)")
-    for block in cost.get("total", []):
-        model = block["model"]
-        cny = sum(
-            float(u["amount"])
-            for u in block.get("usage", [])
-            if u["type"] != "REQUEST"
-        )
-        print(f"    {model}: ¥{cny:.2f}")
+    cost_total = cost if isinstance(cost, list) else cost.get("total", [])
+    if cost_total:
+        for block in cost_total:
+            model = block.get("model", "unknown")
+            cny = sum(
+                float(u["amount"])
+                for u in block.get("usage", [])
+                if u["type"] != "REQUEST"
+            )
+            print(f"    {model}: ¥{cny:.2f}")
 
     cost_csv = out_dir / f"cost-{year}-{month}.csv"
     if cost_csv.exists():
