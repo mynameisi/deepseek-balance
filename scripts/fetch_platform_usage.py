@@ -99,7 +99,11 @@ def print_summary(token: str, year: int, month: int, out_dir: Path, api_key: str
 
     print()
     print("  模型费用 CNY (cost API)")
-    cost_total = cost if isinstance(cost, list) else cost.get("total", [])
+    if isinstance(cost, list):
+        # API returns [{ "total": [...], "days": [...], "currency": "CNY" }]
+        cost_total = cost[0].get("total", []) if cost and isinstance(cost[0], dict) else []
+    else:
+        cost_total = cost.get("total", [])
     if cost_total:
         for block in cost_total:
             model = block.get("model", "unknown")
