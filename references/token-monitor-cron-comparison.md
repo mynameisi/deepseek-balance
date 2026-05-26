@@ -6,8 +6,8 @@ output to report a trend. This reference covers the pattern.
 
 ## Script
 
-`~/.hermes/scripts/token_monitor.py` parses
-`~/.hermes/logs/agent.log` for the last 20 API calls:
+`~/.hermes/scripts/token_monitor.py` parses `~/.hermes/logs/agent.log` for the
+last 20 API calls:
 
 - **Regex:** `API call #\d+.*?in=(\d+)`
 - **Output format:** `Token Monitor: last 20 calls, avg input=<N>, min=<N>, max=<N>`
